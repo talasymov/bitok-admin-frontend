@@ -10,6 +10,8 @@ const links = [
 const menu_items = [
   {'text': t('faqs'), 'value': localePath('/faqs')},
   {'text': t('bonuses'), 'value': localePath('/bonuses')},
+  {'text': t('wheel_of_fortune'), 'value': localePath('/bonuses/wheel-of-fortune')},
+  {'text': t('gift_boxes'), 'value': localePath('/gift-boxes')},
 ]
 </script>
 

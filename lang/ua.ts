@@ -52,4 +52,10 @@ export default {
     ru_lang: 'Російська',
     translate: 'Переклад',
     games: 'Ігри',
+    chance: 'Шанс',
+    degree: 'Градус',
+    bonus: 'Бонус',
+    wheel_of_fortune: 'Колесо фортуни',
+    total_percent: 'Загальний відсоток',
+    gift_boxes: 'Подарункові коробки',
 }

@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import MultiLangTextField from "~/components/Form/MultiLangTextField.vue";
-import MultiLangTextarea from "~/components/Form/MultiLangTextarea.vue";
 import type {Message} from "~/stores/notification";
 import Notification from "~/components/Common/Notification.vue";
 import Config from "~/components/Bonuses/Config.vue";
 
 const {t} = useI18n()
-const localePath = useLocalePath()
 const route = useRoute()
 const form = ref(false)
 const state = ref({})
