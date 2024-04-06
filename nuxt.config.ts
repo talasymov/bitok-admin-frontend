@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     },
 
     build: {
-        transpile: ['vuetify'],
+        transpile: ['vuetify', 'pinia-plugin-persistedstate'],
     },
 
     modules: [
