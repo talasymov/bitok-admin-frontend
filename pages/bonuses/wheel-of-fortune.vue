@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['auth'],
+});
+
 import Notification from "~/components/Common/Notification.vue";
 import Config from "~/components/Bonuses/Config.vue";
 import MultiLangTextField from "~/components/Form/MultiLangTextField.vue";

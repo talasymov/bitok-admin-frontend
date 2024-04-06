@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['auth'],
+});
 import Notification from "~/components/Common/Notification.vue";
 import {ref} from "vue";
 import type {Message} from "~/stores/notification";

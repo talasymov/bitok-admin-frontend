@@ -5,9 +5,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     const auth = useAuthStore()
     const localePath = useLocalePath()
 
-    const excludedPaths = ['/login', '/register', '/forgot-password', '/reset-password']
-
-    if (!auth.logged && !excludedPaths.includes(to.path)){
+    if (!auth.logged){
         return nuxtApp.runWithContext(() => navigateTo(localePath('/login')))
     }
 })
