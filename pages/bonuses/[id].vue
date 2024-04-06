@@ -16,11 +16,12 @@ const updateStatus = ref(null)
 
 const update = async () => {
   const formData = new FormData();
-  formData.append("file", image.value);
+  formData.append("image", image.value);
+  formData.append("data", JSON.stringify(state.value));
 
-  $fetch(`admin/bonuses/${route.params.id}`, {
+  await $fetch(`admin/bonuses/${route.params.id}`, {
     method: "PUT",
-    body: state.value,
+    body: formData,
     immediate: false,
     watch: false,
     async onResponse({response}) {
@@ -70,9 +71,11 @@ onMounted(async () => {
 })
 
 const required = (v) => !!v || 'Field is required'
-const image_rules = (value) => {
-  return !value || !value.length || value[0].size < 2000000 || 'Avatar size should be less than 2 MB!'
-}
+const image_rules = [
+  (value) => {
+    return !value || !value.length || value[0].size < 2000000 || 'Avatar size should be less than 2 MB!'
+  }
+]
 </script>
 
 <template>
@@ -89,7 +92,30 @@ const image_rules = (value) => {
             :rules="[required]"
             label="name"
             clearable
+            class="w-100"
         />
+
+        <div class="d-flex ga-2">
+          <v-file-input
+              v-model="image"
+              :rules="image_rules"
+              accept="image/png, image/jpeg, image/bmp"
+              :label="t('image')"
+              variant="outlined"
+              :prepend-icon="null"
+              append-inner-icon="mdi-camera"
+          ></v-file-input>
+          <NuxtLink :to="state.image" external target="_blank">
+            <v-img
+                v-if="state.image"
+                :src="state.image"
+                rounded
+                cover
+                width="56"
+                height="56"
+            />
+          </NuxtLink>
+        </div>
 
         <v-autocomplete
             v-model="state.games"
@@ -104,25 +130,6 @@ const image_rules = (value) => {
             closable-chips
             return-object
         ></v-autocomplete>
-
-        <div class="d-flex">
-          <!--          <v-file-input-->
-          <!--              v-model="image"-->
-          <!--              :rules="image_rules"-->
-          <!--              accept="image/png, image/jpeg, image/bmp"-->
-          <!--              :label="t('image')"-->
-          <!--              variant="outlined"-->
-          <!--              :prepend-icon="null"-->
-          <!--              append-inner-icon="mdi-camera"-->
-          <!--              class="w-100"-->
-          <!--          ></v-file-input>-->
-          <!--          <v-img-->
-          <!--              v-if="state.image"-->
-          <!--              :src="state.image"-->
-          <!--              width="56"-->
-          <!--              height="56"-->
-          <!--          />-->
-        </div>
 
         <Config v-model="state"/>
 

@@ -12,6 +12,7 @@ const menu_items = [
   {'text': t('bonuses'), 'value': localePath('/bonuses')},
   {'text': t('wheel_of_fortune'), 'value': localePath('/bonuses/wheel-of-fortune')},
   {'text': t('gift_boxes'), 'value': localePath('/gift-boxes')},
+  {'text': t('games'), 'value': localePath('/games')},
 ]
 </script>
 
@@ -34,18 +35,6 @@ const menu_items = [
         </NuxtLink>
 
         <v-spacer></v-spacer>
-
-        <v-responsive max-width="160">
-          <v-text-field
-              density="compact"
-              label="Search"
-              rounded="lg"
-              variant="solo-filled"
-              flat
-              hide-details
-              single-line
-          ></v-text-field>
-        </v-responsive>
       </v-container>
     </v-app-bar>
 

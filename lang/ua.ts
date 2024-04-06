@@ -58,4 +58,9 @@ export default {
     wheel_of_fortune: 'Колесо фортуни',
     total_percent: 'Загальний відсоток',
     gift_boxes: 'Подарункові коробки',
+    game_category: 'Категорія ігор',
+    game_type: 'Тип ігор',
+    game_provider: 'Провайдер ігор',
+    available_for_admin: 'Доступно для адміністратора',
+    available_for_developer: 'Доступно для розробника',
 }

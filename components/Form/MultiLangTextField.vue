@@ -8,6 +8,10 @@ defineProps({
     type: String,
     default: 'Label',
   },
+  density: {
+    type: String,
+    default: 'default',
+  },
   variant: {
     type: String,
     default: 'outlined',
@@ -32,6 +36,7 @@ defineProps({
         :rules="rules"
         :readonly="readonly"
         append-inner-icon="mdi-web"
+        :density="density"
         :variant="variant"
         @click:append-inner="dialog = true"
     ></v-text-field>

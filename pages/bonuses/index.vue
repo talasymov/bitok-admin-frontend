@@ -8,7 +8,7 @@ const headers = ref([
   {title: 'Name', align: 'start', sortable: false, key: 'name'},
   {title: 'FS', align: 'center', sortable: false, key: 'free_spins'},
   {title: 'FS, bet', align: 'center', sortable: false, key: 'free_spins_bet'},
-  {title: 'Image', key: 'status', align: 'center'},
+  {title: 'Image', key: 'image', align: 'center'},
   {title: 'Type', key: 'no_deposit', align: 'center'},
   {title: 'Actions', key: 'actions', align: 'center'},
 ]);
