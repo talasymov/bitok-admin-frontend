@@ -13,6 +13,8 @@ const menu_items = [
   {'text': t('wheel_of_fortune'), 'value': localePath('/bonuses/wheel-of-fortune')},
   {'text': t('gift_boxes'), 'value': localePath('/gift-boxes')},
   {'text': t('games'), 'value': localePath('/games')},
+  {'text': t('users'), 'value': localePath('/users')},
+  {'text': t('sliders'), 'value': localePath('/sliders')},
 ]
 </script>
 
@@ -20,12 +22,11 @@ const menu_items = [
   <v-app id="inspire">
     <v-app-bar flat>
       <v-container class="mx-auto d-flex align-center justify-center">
-        <v-avatar
-            class="me-4"
-            color="grey-darken-1"
-            size="32"
-        ></v-avatar>
-
+<!--        <v-avatar-->
+<!--            class="me-4"-->
+<!--            color="grey-darken-1"-->
+<!--            size="32"-->
+<!--        ></v-avatar>-->
         <NuxtLink
             :to="link.value"
             v-for="link in links"
@@ -63,7 +64,7 @@ const menu_items = [
             </v-sheet>
           </v-col>
 
-          <v-col>
+          <v-col cols="10">
             <v-sheet
                 min-height="70vh"
                 rounded="lg"

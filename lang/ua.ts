@@ -63,4 +63,13 @@ export default {
     game_provider: 'Провайдер ігор',
     available_for_admin: 'Доступно для адміністратора',
     available_for_developer: 'Доступно для розробника',
+    username: 'Ім\'я користувача',
+    phone: 'Телефон',
+    balance: 'Баланс',
+    wager_left: 'Вейджер залишився',
+    wager_target: 'Цільовий вейджер',
+    not_filled: 'Не заповнено',
+    verified: 'Підтверджено',
+    not_verified: 'Не підтверджено',
+    sliders: 'Слайдери',
 }

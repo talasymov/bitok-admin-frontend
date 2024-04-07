@@ -38,7 +38,7 @@ const required = (v) => !!v || 'Field is required'
 </script>
 
 <template>
-    <v-sheet class="bg-deep-purple pa-12 w-100 h-100 d-flex align-center justify-center" rounded>
+    <v-sheet class="pa-12 w-100 h-100 d-flex align-center justify-center" rounded>
       <v-card class="mx-auto px-6 py-8" style="width: 300px">
         <v-form
             v-model="form"

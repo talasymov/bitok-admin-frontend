@@ -1,19 +1,17 @@
 <script setup lang="ts">
+import {ref} from "vue";
+
 definePageMeta({
   middleware: ['auth'],
 });
 
-import {ref} from "vue";
 import Notification from "~/components/Common/Notification.vue";
-import MultiLangTextField from "~/components/Form/MultiLangTextField.vue";
 import type {Message} from "~/stores/notification";
+import MultiLangTextField from "~/components/Form/MultiLangTextField.vue";
 
 const {t} = useI18n()
 const route = useRoute()
 const errors = ref(null)
-const game_providers = ref([])
-const game_types = ref([])
-const game_categories = ref([])
 const state = ref({})
 const image = ref(null)
 
@@ -22,7 +20,7 @@ const update = async () => {
   formData.append("image", image.value);
   formData.append("data", JSON.stringify(state.value));
 
-  await $fetch(`admin/games/${route.params.id}`, {
+  await $fetch(`admin/sliders/${route.params.id}`, {
     method: "PUT",
     body: formData,
     immediate: false,
@@ -41,36 +39,11 @@ const update = async () => {
   })
 }
 
-
 onMounted(async () => {
-  await $fetch(`admin/games/${route.params.id}`, {
+  await $fetch(`admin/sliders/${route.params.id}`, {
     onResponse({response}) {
       if (response?.status === 200) {
-        state.value = response._data
-      }
-    }
-  })
-
-  await $fetch('admin/game-providers', {
-    onResponse({response}) {
-      if (response?.status === 200) {
-        game_providers.value = response._data
-      }
-    }
-  })
-
-  await $fetch('admin/game-types', {
-    onResponse({response}) {
-      if (response?.status === 200) {
-        game_types.value = response._data
-      }
-    }
-  })
-
-  await $fetch('admin/game-categories', {
-    onResponse({response}) {
-      if (response?.status === 200) {
-        game_categories.value = response._data
+        state.value = response._data.data
       }
     }
   })
@@ -89,12 +62,12 @@ const image_rules = [
     <v-card class="mx-auto px-6 py-8 w-100">
       <Notification/>
 
-      <v-text-field
+      <multi-lang-text-field
           v-model="state.name"
-          :label="t('name')"
           :rules="[required]"
-          variant="outlined"
+          label="name"
           clearable
+          class="w-100"
       />
 
       <div class="d-flex ga-2">
@@ -119,46 +92,6 @@ const image_rules = [
         </NuxtLink>
       </div>
 
-      <v-select
-          v-model="state.game_category_id"
-          :items="game_categories"
-          :label="t('game_category')"
-          item-title="name"
-          item-value="id"
-          variant="outlined"
-          clearable
-      />
-
-      <v-select
-        v-model="state.game_provider_id"
-        :items="game_providers"
-        :label="t('game_provider')"
-        item-title="name"
-        variant="outlined"
-        item-value="id"
-        :rules="[required]"
-        disabled
-        clearable
-        :hint="t('available_for_developer')"
-        class="mb-2"
-        persistent-hint
-      />
-
-      <v-select
-          v-model="state.game_type_id"
-          :items="game_types"
-          :label="t('game_type')"
-          item-title="name"
-          variant="outlined"
-          item-value="id"
-          :rules="[required]"
-          clearable
-          disabled
-          :hint="t('available_for_developer')"
-          class="mb-2"
-          persistent-hint
-      />
-
       <br>
 
       <div class="d-flex justify-space-between align-center ga-2">
@@ -176,3 +109,7 @@ const image_rules = [
     </v-card>
   </v-sheet>
 </template>
+
+<style scoped>
+
+</style>

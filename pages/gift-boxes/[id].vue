@@ -61,7 +61,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-sheet class="bg-grey-lighten-4 pa-12 w-100 h-100 d-flex flex-column align-center justify-center" rounded>
+  <v-sheet class="pa-12 w-100 h-100 d-flex flex-column align-center justify-center" rounded>
     <v-card class="mx-auto px-6 py-8 w-100">
       <Notification/>
 
