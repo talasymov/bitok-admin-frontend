@@ -49,6 +49,18 @@ const applySearch = () => {
     filter_search.value = search.value
   }, 1000)
 }
+
+useBreadcrumbsStore().breadcrumbs = [
+  {
+    title: t('dashboard'),
+    disabled: false,
+    href: localePath('/'),
+  },
+  {
+    title: t('users'),
+    disabled: true,
+  },
+]
 </script>
 
 
@@ -58,7 +70,7 @@ const applySearch = () => {
   >
     <v-toolbar flat>
       <v-toolbar-title>
-        {{ t('games') }}
+        {{ t('users') }}
       </v-toolbar-title>
 
       <v-spacer></v-spacer>

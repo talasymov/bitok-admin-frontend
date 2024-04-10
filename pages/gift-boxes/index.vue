@@ -26,6 +26,18 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
         loading.value = false
       })
 };
+
+useBreadcrumbsStore().breadcrumbs = [
+  {
+    title: t('dashboard'),
+    disabled: false,
+    href: localePath('/'),
+  },
+  {
+    title: t('gift_boxes'),
+    disabled: true,
+  }
+]
 </script>
 
 
@@ -34,15 +46,12 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
       class="mx-auto"
   >
     <v-toolbar flat>
-      <v-toolbar-title class="text-grey">
+      <v-toolbar-title>
         {{ t('gift_boxes') }}
       </v-toolbar-title>
-
       <v-spacer></v-spacer>
-
       <v-btn :to="localePath('/gift-boxes/create')" icon="mdi-plus"/>
-
-      <v-btn icon="mdi-dots-vertical"/>
+<!--      <v-btn icon="mdi-dots-vertical"/>-->
     </v-toolbar>
     <v-data-table-server
         v-model:items-per-page="itemsPerPage"

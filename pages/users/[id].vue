@@ -1,64 +1,103 @@
 <script setup lang="ts">
+import type {Message} from "~/stores/notification";
+
 definePageMeta({
   middleware: ['auth'],
 });
 
-import {ref} from 'vue';
-
 const {t} = useI18n()
 const localePath = useLocalePath()
 const route = useRoute()
-const tab = ref(1)
+const tab = ref(7)
 const user = ref({})
-const breadcrumbs = ref([])
 
-onMounted(async () => {
-  await $fetch(`admin/users/${route.params.id}`, {
-    onResponse({response}) {
+const approveDocumentVerification = () => {
+  $fetch(`admin/verifications/verify-document/${route.params.id}`, {
+    method: 'POST',
+    async onResponse({response}) {
       if (response?.status === 200) {
-        user.value = response._data.data
-        breadcrumbs.value = [
-          {
-            title: t('dashboard'),
-            disabled: false,
-            href: localePath('/'),
-          },
-          {
-            title: t('users'),
-            disabled: false,
-            href: localePath('/users'),
-          },
-          {
-            title: user.value.name,
-            disabled: true,
-          },
-        ]
+        await fetchUser()
+
+        useNotify(<Message>{
+          message: response._data.message,
+          type: response._data.status ? 'success' : 'error'
+        })
       }
     }
   })
+}
+
+const {refresh: fetchUser, status: fetchUserStatus} = useFetch<any>(`admin/users/${route.params.id}`, {
+  immediate: false,
+  watch: false,
+  async onResponse({response}) {
+    if (response?.status === 200) {
+      user.value = response._data.data
+
+      useBreadcrumbsStore().breadcrumbs = [
+        {
+          title: t('dashboard'),
+          disabled: false,
+          href: localePath('/'),
+        },
+        {
+          title: t('users'),
+          disabled: false,
+          href: localePath('/users'),
+        },
+        {
+          title: user.value.name,
+          disabled: true,
+        },
+      ]
+    }
+  }
+});
+
+onMounted(async () => {
+  await fetchUser()
+  // await $fetch(`admin/users/${route.params.id}`, {
+  //   onResponse({response}) {
+  //     if (response?.status === 200) {
+  //       user.value = response._data.data
+  //       breadcrumbs.value = [
+  //         {
+  //           title: t('dashboard'),
+  //           disabled: false,
+  //           href: localePath('/'),
+  //         },
+  //         {
+  //           title: t('users'),
+  //           disabled: false,
+  //           href: localePath('/users'),
+  //         },
+  //         {
+  //           title: user.value.name,
+  //           disabled: true,
+  //         },
+  //       ]
+  //     }
+  //   }
+  // })
 })
 </script>
 
 <template>
   <div class="w-full">
-    <v-breadcrumbs
-        :items="breadcrumbs"
-    ></v-breadcrumbs>
     <v-container fluid>
       <v-row>
         <v-col
             cols="12"
-            md="3"
+            md="2"
         >
           <v-card
-              class="mx-auto"
-              elevation="24"
+              class="mx-auto py-3"
           >
-            <v-img
-                height="200px"
-                :src="user.avatar"
-                cover
-            ></v-img>
+            <!--            <v-img-->
+            <!--                height="200px"-->
+            <!--                :src="user.avatar"-->
+            <!--                cover-->
+            <!--            ></v-img>-->
             <v-card-title class="d-flex ga-2 align-center py-2">
               {{ user.name }}
               <v-icon icon="mdi-check-decagram" size="24" :color="user.is_verified ? 'success' : 'warning'"/>
@@ -87,13 +126,12 @@ onMounted(async () => {
         </v-col>
         <v-col
             cols="12"
-            md="9"
+            md="10"
         >
           <v-card class="w-100">
             <v-tabs
                 v-model="tab"
                 align-tabs="center"
-                color="deep-purple-accent-4"
             >
               <v-tab :value="1">{{ t('bonuses') }}</v-tab>
               <v-tab :value="2">{{ t('transactions') }}</v-tab>
@@ -102,16 +140,50 @@ onMounted(async () => {
               <v-tab :value="5">{{ t('documents') }}</v-tab>
               <v-tab :value="6">{{ t('verifications') }}</v-tab>
               <v-tab :value="7">{{ t('tournaments') }}</v-tab>
-              <v-tab :value="8">{{ t('activity_log') }}</v-tab>
+              <!--              <v-tab :value="8">{{ t('activity_log') }}</v-tab>-->
             </v-tabs>
             <v-window v-model="tab">
-              <v-window-item
-                  v-for="n in 8"
-                  :key="n"
-                  :value="n"
-              >
-                {{ user }}
+              <v-window-item :value="1">
+                <UserBonusTable
+                    :items="user.bonuses"
+                />
               </v-window-item>
+              <v-window-item :value="2">
+                <TransactionTable
+                    :items="user.transactions"
+                />
+              </v-window-item>
+              <v-window-item :value="3">
+                <NotificationTable
+                    :items="user.notifications"
+                />
+              </v-window-item>
+              <v-window-item :value="4">
+                <UserGiftBoxTable
+                    :items="user.gift_boxes"
+                />
+              </v-window-item>
+              <v-window-item :value="5">
+                <DocumentList
+                    :items="user.documents"
+                />
+              </v-window-item>
+              <v-window-item :value="6">
+                <VerificationList
+                    @approve="approveDocumentVerification"
+                    :email_at="user.email_verified_at"
+                    :phone_at="user.phone_verified_at"
+                    :document_at="user.document_verified_at"
+                />
+              </v-window-item>
+              <v-window-item :value="7">
+                <TournamentTable
+                    :items="user.tournaments"
+                />
+              </v-window-item>
+              <!--              <v-window-item :value="8">-->
+
+              <!--              </v-window-item>-->
             </v-window>
           </v-card>
         </v-col>

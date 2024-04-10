@@ -7,7 +7,3 @@ definePageMeta({
 <template>
 
 </template>
-
-<style scoped>
-
-</style>

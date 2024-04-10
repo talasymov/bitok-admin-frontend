@@ -49,8 +49,9 @@ const required = (v) => !!v || 'Field is required'
               :readonly="loginStatus === 'pending'"
               :rules="[required]"
               class="mb-2"
+              variant="outlined"
+              density="compact"
               label="Email"
-              clearable
           ></v-text-field>
 
           <v-text-field
@@ -58,8 +59,10 @@ const required = (v) => !!v || 'Field is required'
               :readonly="loginStatus === 'pending'"
               :rules="[required]"
               label="Password"
+              type="password"
+              variant="outlined"
+              density="compact"
               placeholder="Enter your password"
-              clearable
           ></v-text-field>
 
           <br>
@@ -70,7 +73,7 @@ const required = (v) => !!v || 'Field is required'
               color="success"
               size="large"
               type="submit"
-              variant="elevated"
+              variant="tonal"
               block
           >
             Sign In

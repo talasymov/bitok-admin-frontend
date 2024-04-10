@@ -2,12 +2,12 @@
 definePageMeta({
   middleware: ['auth'],
 });
-import Notification from "~/components/Common/Notification.vue";
 import {ref} from "vue";
 import type {Message} from "~/stores/notification";
 import MultiLangTextField from "~/components/Form/MultiLangTextField.vue";
 
-const {t} = useI18n()
+const {t, locale} = useI18n()
+const localePath = useLocalePath()
 const route = useRoute()
 const errors = ref(null)
 const bonuses = ref([])
@@ -46,6 +46,23 @@ onMounted(async () => {
     onResponse({response}) {
       if (response?.status === 200) {
         state.value = response._data
+
+        useBreadcrumbsStore().breadcrumbs = [
+          {
+            title: t('dashboard'),
+            disabled: false,
+            href: localePath('/'),
+          },
+          {
+            title: t('gift_boxes'),
+            disabled: false,
+            href: localePath('/gift-boxes'),
+          },
+          {
+            title: state.value.name[locale.value],
+            disabled: true,
+          },
+        ]
       }
     }
   })
@@ -61,76 +78,72 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-sheet class="pa-12 w-100 h-100 d-flex flex-column align-center justify-center" rounded>
-    <v-card class="mx-auto px-6 py-8 w-100">
-      <Notification/>
+  <v-card class="mx-auto px-6 py-8" width="500">
+    <multi-lang-text-field
+        v-model="state.name"
+        label="name"
+        clearable
+    />
 
-      <multi-lang-text-field
-          v-model="state.name"
-          label="name"
-          clearable
-      />
-
-      <v-data-table
-          v-if="state?.bonuses?.length > 0"
-          :headers="headers"
-          :items="state.bonuses"
-          :items-per-page="-1"
-          :sort-by="[{key: 'bonus_chance', order: 'desc'}]"
-      >
-        <template v-slot:item.bonus="{ item }">
-          <v-autocomplete
-              v-model="item.id"
-              :label="t('bonus')"
-              :items="bonuses"
-              item-value="id"
-              item-title="name"
-              variant="outlined"
-              clearable
-              return-object
-              hide-details
-              density="compact"
-              :disabled="true"
-          ></v-autocomplete>
-        </template>
-
-        <template v-slot:item.chance="{ item }">
-          <v-text-field
-              v-model="item.bonus_chance"
-              :label="t('chance')"
-              variant="outlined"
-              type="number"
-              min="0"
-              hide-details
-              density="compact"
-          />
-        </template>
-
-        <template #bottom></template>
-      </v-data-table>
-
-      <br>
-
-      <div class="d-flex justify-space-between align-center ga-2">
-        <v-spacer/>
-
-        <v-chip label :color="totalPercent !== 100 ? 'red' : 'green'">
-          {{ t('total_percent') }}:
-          {{ totalPercent }}
-        </v-chip>
-
-        <v-btn
-            @click="update"
-            :disabled="totalPercent !== 100"
-            color="success"
-            type="submit"
+    <v-data-table
+        v-if="state?.bonuses?.length > 0"
+        :headers="headers"
+        :items="state.bonuses"
+        :items-per-page="-1"
+        :sort-by="[{key: 'bonus_chance', order: 'desc'}]"
+    >
+      <template v-slot:item.bonus="{ item }">
+        <v-autocomplete
+            v-model="item.id"
+            :label="t('bonus')"
+            :items="bonuses"
+            item-value="id"
+            item-title="name"
             variant="outlined"
-        >
-          {{ t('update') }}
-        </v-btn>
-      </div>
-    </v-card>
-  </v-sheet>
+            clearable
+            return-object
+            hide-details
+            density="compact"
+            :disabled="true"
+        ></v-autocomplete>
+      </template>
+
+      <template v-slot:item.chance="{ item }">
+        <v-text-field
+            v-model="item.bonus_chance"
+            :label="t('chance')"
+            variant="outlined"
+            type="number"
+            min="0"
+            hide-details
+            density="compact"
+        />
+      </template>
+
+      <template #bottom></template>
+    </v-data-table>
+
+    <br>
+
+    <div class="d-flex justify-space-between align-center ga-2">
+      <v-spacer/>
+
+      <v-chip label :color="totalPercent !== 100 ? 'red' : 'green'">
+        {{ t('total_percent') }}:
+        {{ totalPercent }}
+      </v-chip>
+
+      <v-btn
+          @click="update"
+          :disabled="totalPercent !== 100"
+          color="success"
+          type="submit"
+          variant="tonal"
+      >
+        {{ t('update') }}
+      </v-btn>
+    </div>
+  </v-card>
 </template>
 
 <style scoped>

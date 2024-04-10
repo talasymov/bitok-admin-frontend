@@ -30,6 +30,18 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
         loading.value = false
       })
 };
+
+useBreadcrumbsStore().breadcrumbs = [
+  {
+    title: t('dashboard'),
+    disabled: false,
+    href: localePath('/'),
+  },
+  {
+    title: t('bonuses'),
+    disabled: true,
+  },
+]
 </script>
 
 
@@ -38,7 +50,7 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
       class="mx-auto"
   >
     <v-toolbar flat>
-      <v-toolbar-title class="text-grey">
+      <v-toolbar-title>
         {{ t('bonuses') }}
       </v-toolbar-title>
 
@@ -59,18 +71,16 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
         @update:options="loadItems"
     >
       <template v-slot:item.no_deposit="{ item }">
-        <div class="text-end">
-          <v-chip
-              :color="item.no_deposit === 0 ? 'green' : 'orange'"
-              :text="item.no_deposit === 0 ? 'Deposit' : 'No Deposit'"
-              class="text-uppercase"
-              size="small"
-              label
-          ></v-chip>
-        </div>
+        <v-chip
+            :color="item.no_deposit === 0 ? 'green' : 'orange'"
+            :text="item.no_deposit === 0 ? 'Deposit' : 'No Deposit'"
+            class="text-uppercase"
+            size="small"
+            label
+        ></v-chip>
       </template>
       <template v-slot:item.image="{ item }">
-        <v-img :src="item.image"/>
+        <v-img :src="item.image" max-width="100" max-height="100"/>
       </template>
       <template v-slot:item.actions="{ item }">
         <NuxtLink :to="localePath(`/bonuses/${item.id}`)">

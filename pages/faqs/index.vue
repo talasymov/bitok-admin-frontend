@@ -28,6 +28,18 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
         loading.value = false
       })
 };
+
+useBreadcrumbsStore().breadcrumbs = [
+  {
+    title: t('dashboard'),
+    disabled: false,
+    href: localePath('/'),
+  },
+  {
+    title: t('faqs'),
+    disabled: true,
+  },
+]
 </script>
 
 
@@ -36,15 +48,12 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
       class="mx-auto"
   >
     <v-toolbar flat>
-      <v-toolbar-title class="text-grey">
+      <v-toolbar-title>
         {{ t('faqs') }}
       </v-toolbar-title>
-
       <v-spacer></v-spacer>
-
       <v-btn :to="localePath('/faqs/create')" icon="mdi-plus"/>
-
-      <v-btn icon="mdi-dots-vertical"/>
+<!--      <v-btn icon="mdi-dots-vertical"/>-->
     </v-toolbar>
 
     <v-data-table-server

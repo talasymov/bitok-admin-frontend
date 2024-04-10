@@ -4,11 +4,11 @@ definePageMeta({
 });
 
 import {ref} from "vue";
-import Notification from "~/components/Common/Notification.vue";
 import MultiLangTextField from "~/components/Form/MultiLangTextField.vue";
 import type {Message} from "~/stores/notification";
 
-const {t} = useI18n()
+const {t, locale} = useI18n()
+const localePath = useLocalePath()
 const route = useRoute()
 const errors = ref(null)
 const game_providers = ref([])
@@ -47,6 +47,23 @@ onMounted(async () => {
     onResponse({response}) {
       if (response?.status === 200) {
         state.value = response._data
+
+        useBreadcrumbsStore().breadcrumbs = [
+          {
+            title: t('dashboard'),
+            disabled: false,
+            href: localePath('/'),
+          },
+          {
+            title: t('games'),
+            disabled: false,
+            href: localePath('/games'),
+          },
+          {
+            title: state.value.name,
+            disabled: true,
+          },
+        ]
       }
     }
   })
@@ -85,10 +102,7 @@ const image_rules = [
 </script>
 
 <template>
-  <v-sheet class="bg-grey-lighten-4 pa-12 w-100 h-100 d-flex flex-column align-center justify-center" rounded>
-    <v-card class="mx-auto px-6 py-8 w-100">
-      <Notification/>
-
+    <v-card class="mx-auto px-6 py-8" width="500">
       <v-text-field
           v-model="state.name"
           :label="t('name')"
@@ -168,11 +182,10 @@ const image_rules = [
             @click="update"
             color="success"
             type="submit"
-            variant="outlined"
+            variant="tonal"
         >
           {{ t('update') }}
         </v-btn>
       </div>
     </v-card>
-  </v-sheet>
 </template>

@@ -5,11 +5,11 @@ definePageMeta({
   middleware: ['auth'],
 });
 
-import Notification from "~/components/Common/Notification.vue";
 import type {Message} from "~/stores/notification";
 import MultiLangTextField from "~/components/Form/MultiLangTextField.vue";
 
 const {t} = useI18n()
+const localePath = useLocalePath()
 const route = useRoute()
 const errors = ref(null)
 const state = ref({})
@@ -44,6 +44,23 @@ onMounted(async () => {
     onResponse({response}) {
       if (response?.status === 200) {
         state.value = response._data.data
+
+        useBreadcrumbsStore().breadcrumbs = [
+          {
+            title: t('dashboard'),
+            disabled: false,
+            href: localePath('/'),
+          },
+          {
+            title: t('sliders'),
+            disabled: false,
+            href: localePath('/sliders'),
+          },
+          {
+            title: state.value.name,
+            disabled: true,
+          },
+        ]
       }
     }
   })
@@ -58,58 +75,50 @@ const image_rules = [
 </script>
 
 <template>
-  <v-sheet class="bg-grey-lighten-4 pa-12 w-100 h-100 d-flex flex-column align-center justify-center" rounded>
-    <v-card class="mx-auto px-6 py-8 w-100">
-      <Notification/>
+  <v-card class="mx-auto px-6 py-8" width="500">
+    <multi-lang-text-field
+        v-model="state.name"
+        :rules="[required]"
+        label="name"
+        clearable
+        class="w-100"
+    />
 
-      <multi-lang-text-field
-          v-model="state.name"
-          :rules="[required]"
-          label="name"
-          clearable
-          class="w-100"
-      />
+    <div class="d-flex ga-2">
+      <v-file-input
+          v-model="image"
+          :rules="image_rules"
+          accept="image/png, image/jpeg, image/bmp"
+          :label="t('image')"
+          variant="outlined"
+          :prepend-icon="null"
+          append-inner-icon="mdi-camera"
+      ></v-file-input>
+      <NuxtLink :to="state.image" external target="_blank">
+        <v-img
+            v-if="state.image"
+            :src="state.image"
+            rounded
+            cover
+            width="56"
+            height="56"
+        />
+      </NuxtLink>
+    </div>
 
-      <div class="d-flex ga-2">
-        <v-file-input
-            v-model="image"
-            :rules="image_rules"
-            accept="image/png, image/jpeg, image/bmp"
-            :label="t('image')"
-            variant="outlined"
-            :prepend-icon="null"
-            append-inner-icon="mdi-camera"
-        ></v-file-input>
-        <NuxtLink :to="state.image" external target="_blank">
-          <v-img
-              v-if="state.image"
-              :src="state.image"
-              rounded
-              cover
-              width="56"
-              height="56"
-          />
-        </NuxtLink>
-      </div>
+    <br>
 
-      <br>
+    <div class="d-flex justify-space-between align-center ga-2">
+      <v-spacer/>
 
-      <div class="d-flex justify-space-between align-center ga-2">
-        <v-spacer/>
-
-        <v-btn
-            @click="update"
-            color="success"
-            type="submit"
-            variant="outlined"
-        >
-          {{ t('update') }}
-        </v-btn>
-      </div>
-    </v-card>
-  </v-sheet>
+      <v-btn
+          @click="update"
+          color="success"
+          type="submit"
+          variant="tonal"
+      >
+        {{ t('update') }}
+      </v-btn>
+    </div>
+  </v-card>
 </template>
-
-<style scoped>
-
-</style>

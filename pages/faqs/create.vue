@@ -5,7 +5,6 @@ definePageMeta({
 
 import MultiLangTextField from "~/components/Form/MultiLangTextField.vue";
 import MultiLangTextarea from "~/components/Form/MultiLangTextarea.vue";
-import Notification from "~/components/Common/Notification.vue";
 
 const {t, locales} = useI18n()
 const localePath = useLocalePath()
@@ -68,67 +67,64 @@ const required = (v) => !!v || 'Field is required'
 </script>
 
 <template>
-  <v-sheet class="bg-grey-lighten-4 pa-12 w-100 h-100 d-flex flex-column align-center justify-center" rounded>
-    <v-card class="mx-auto px-6 py-8 w-100">
-      <Notification/>
-      <v-form
-          v-model="form"
-          @submit.prevent="create"
-      >
-        <multi-lang-text-field
-            v-model="state.name"
-            label="name"
-            :readonly="createStatus === 'pending'"
-            :rules="[required]"
-            clearable
-        />
+  <v-card class="mx-auto px-6 py-8" width="500">
+    <v-form
+        v-model="form"
+        @submit.prevent="create"
+    >
+      <multi-lang-text-field
+          v-model="state.name"
+          label="name"
+          :readonly="createStatus === 'pending'"
+          :rules="[required]"
+          clearable
+      />
 
-        <v-autocomplete
-            v-model="state.faq_category_id"
-            :label="t('category')"
-            :items="categories"
-            item-value="id"
-            item-title="name"
-            variant="outlined"
-        ></v-autocomplete>
+      <v-autocomplete
+          v-model="state.faq_category_id"
+          :label="t('category')"
+          :items="categories"
+          item-value="id"
+          item-title="name"
+          variant="outlined"
+      ></v-autocomplete>
 
-        <v-autocomplete
-            v-model="state.status"
-            :label="t('status')"
-            :items="statuses"
-            item-value="id"
-            item-title="name"
-            variant="outlined"
-        ></v-autocomplete>
+      <v-autocomplete
+          v-model="state.status"
+          :label="t('status')"
+          :items="statuses"
+          item-value="id"
+          item-title="name"
+          variant="outlined"
+      ></v-autocomplete>
 
-        <multi-lang-textarea
-            v-model="state.content"
-            label="content"
-            :readonly="createStatus === 'pending'"
-            :rules="[required]"
-            variant="outlined"
-            clearable
-            no-resize
-        />
+      <multi-lang-textarea
+          v-model="state.content"
+          label="content"
+          :readonly="createStatus === 'pending'"
+          :rules="[required]"
+          variant="outlined"
+          clearable
+          no-resize
+      />
 
-        <br>
+      <br>
 
-        <div class="d-flex justify-space-between">
-          <v-spacer/>
+      <div class="d-flex justify-space-between">
+        <v-spacer/>
 
-          <v-btn
-              :disabled="!form"
-              :loading="createStatus === 'pending'"
-              color="success"
-              type="submit"
-              variant="outlined"
-          >
-            {{ t('create') }}
-          </v-btn>
-        </div>
-      </v-form>
-    </v-card>
-  </v-sheet>
+        <v-btn
+            :disabled="!form"
+            :loading="createStatus === 'pending'"
+            color="success"
+            type="submit"
+            variant="tonal"
+        >
+          {{ t('create') }}
+        </v-btn>
+      </div>
+    </v-form>
+  </v-card>
 </template>
 
 <style scoped>

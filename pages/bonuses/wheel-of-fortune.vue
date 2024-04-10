@@ -3,13 +3,13 @@ definePageMeta({
   middleware: ['auth'],
 });
 
-import Notification from "~/components/Common/Notification.vue";
 import Config from "~/components/Bonuses/Config.vue";
 import MultiLangTextField from "~/components/Form/MultiLangTextField.vue";
 import {ref} from "vue";
 import type {Message} from "~/stores/notification";
 
 const {t} = useI18n()
+const localePath = useLocalePath()
 const items = ref([])
 const errors = ref(null)
 const bonuses = ref([])
@@ -62,12 +62,22 @@ onMounted(async () => {
     }
   })
 })
+
+useBreadcrumbsStore().breadcrumbs = [
+  {
+    title: t('dashboard'),
+    disabled: false,
+    href: localePath('/'),
+  },
+  {
+    title: t('wheel_of_fortune'),
+    disabled: true,
+  },
+]
 </script>
 
 <template>
-  <v-sheet class="bg-grey-lighten-4 pa-12 w-100 h-100 d-flex flex-column align-center justify-center" rounded>
-    <v-card class="mx-auto px-6 py-8 w-100">
-      <Notification/>
+    <v-card class="mx-auto px-6 py-8 table-no-border" width="800">
       <v-data-table
           :headers="headers"
           :items="items"
@@ -120,15 +130,16 @@ onMounted(async () => {
             :disabled="totalPercent !== 100"
             color="success"
             type="submit"
-            variant="outlined"
+            variant="tonal"
         >
           {{ t('update') }}
         </v-btn>
       </div>
     </v-card>
-  </v-sheet>
 </template>
 
-<style scoped>
-
+<style>
+.table-no-border .v-table .v-table__wrapper > table > tbody > tr:not(:last-child) > td {
+  border-bottom: 0 !important;
+}
 </style>

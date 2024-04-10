@@ -27,6 +27,18 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
         loading.value = false
       })
 };
+
+useBreadcrumbsStore().breadcrumbs = [
+  {
+    title: t('dashboard'),
+    disabled: false,
+    href: localePath('/'),
+  },
+  {
+    title: t('sliders'),
+    disabled: true,
+  },
+]
 </script>
 
 
@@ -36,7 +48,7 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
   >
     <v-toolbar flat>
       <v-toolbar-title class="text-grey">
-        {{ t('gift_boxes') }}
+        {{ t('sliders') }}
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
