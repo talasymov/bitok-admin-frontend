@@ -75,12 +75,6 @@ useBreadcrumbsStore().breadcrumbs = [
       <!--      <template v-slot:item.image="{ item }">-->
       <!--        <v-img :src="item.image"/>-->
       <!--      </template>-->
-      <template v-slot:item.actions="{ item }">
-        <NuxtLink :to="localePath(`/sliders/${item.id}`)">
-          <v-btn icon="mdi-pencil" size="35"></v-btn>
-        </NuxtLink>
-      </template>
-
       <template #bottom></template>
     </v-data-table-server>
   </v-card>

@@ -18,6 +18,10 @@ const headers = TRANSACTIONS_HEADERS.map((header) => ({
 
 <template>
   <div>
-    <v-data-table :headers="headers" :items="items"/>
+    <v-data-table :headers="headers" :items="items">
+      <template #item.creator="{item}">
+        {{ item.creator.email }}
+      </template>
+    </v-data-table>
   </div>
 </template>

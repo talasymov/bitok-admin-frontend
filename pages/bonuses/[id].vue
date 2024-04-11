@@ -175,7 +175,10 @@ const image_rules = [
       </v-toolbar>
 
       <div class="pa-4" v-if="state?.meta?.conditions?.length > 0">
-        <v-list lines="one">
+        <v-list
+            lines="three"
+            item-props
+        >
           <v-list-item v-for="(_, index) in state.meta.conditions" :key="index">
             <Config v-model="state.meta.conditions[index]"/>
 

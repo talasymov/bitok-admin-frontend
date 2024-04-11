@@ -12,6 +12,7 @@ export const TRANSACTIONS_HEADERS = [
     {title: 'amount', value: 'amount'},
     {title: 'type', value: 'type'},
     {title: 'status', value: 'status'},
+    {title: 'creator', value: 'creator'},
     {title: 'created_at', value: 'created_at'},
 ]
 
@@ -23,6 +24,7 @@ export const NOTIFICATIONS_HEADERS = [
 ]
 
 export const USER_BONUSES_HEADERS = [
+    {title: 'name', value: 'name'},
     {title: 'status', value: 'status'},
     {title: 'source_type', value: 'source_type'},
     {title: 'deadline', value: 'deadline'},

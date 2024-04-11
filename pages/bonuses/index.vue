@@ -14,6 +14,8 @@ const headers = ref([
   {title: t('fs_bet'), align: 'center', sortable: false, key: 'free_spins_bet'},
   {title: t('image'), key: 'image', align: 'center'},
   {title: t('type'), key: 'no_deposit', align: 'center'},
+  {title: t('created_at'), key: 'created_at', align: 'center'},
+  {title: t('updated_at'), key: 'updated_at', align: 'center'},
 ]);
 const search = ref('');
 const serverItems = ref([]);

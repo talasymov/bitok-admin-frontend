@@ -14,6 +14,8 @@ const headers = ref([
   {title: t('bonuses'), align: 'center', sortable: false, key: 'bonus_balance'},
   {title: t('wager_left'), align: 'center', sortable: false, key: 'wager_left'},
   {title: t('wager_target'), align: 'center', sortable: false, key: 'wager_target'},
+  {title: t('created_at'), align: 'center', sortable: false, key: 'created_at'},
+  {title: t('updated_at'), align: 'center', sortable: false, key: 'updated_at'},
 ]);
 const itemsPerPage = ref(5);
 const filter_search = ref('');

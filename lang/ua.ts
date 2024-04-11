@@ -99,4 +99,5 @@ export default {
     id: 'ID',
     fs: 'FS',
     fs_bet: 'FS Bet',
+    creator: 'Створив',
 }

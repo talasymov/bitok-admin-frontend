@@ -77,14 +77,22 @@ useBreadcrumbsStore().breadcrumbs = [
 </script>
 
 <template>
-    <v-card class="mx-auto px-6 py-8 table-no-border" width="800">
-      <v-data-table
-          :headers="headers"
-          :items="items"
-          :items-per-page="-1"
-          :sort-by="[{key: 'chance', order: 'desc'}]"
-      >
-        <template v-slot:item.bonus="{ item }">
+  <v-card class="mx-auto px-6 py-8 table-no-border" width="800">
+    <v-data-table
+        :headers="headers"
+        :items="items"
+        :items-per-page="-1"
+        :sort-by="[{key: 'chance', order: 'desc'}]"
+    >
+      <template v-slot:item.bonus="{ item }">
+        <div class="d-flex ga-2">
+          <NuxtLink :to="localePath(`/bonuses/${item.bonus_id}`)">
+            <v-btn
+                icon="mdi-pencil"
+                variant="flat"
+                size="x-small"
+            />
+          </NuxtLink>
           <v-autocomplete
               v-model="item.bonus_id"
               :label="t('bonus')"
@@ -98,44 +106,45 @@ useBreadcrumbsStore().breadcrumbs = [
               density="compact"
               :disabled="true"
           ></v-autocomplete>
-        </template>
+        </div>
+      </template>
 
-        <template v-slot:item.chance="{ item }">
-          <v-text-field
-              v-model="item.chance"
-              :label="t('chance')"
-              variant="outlined"
-              type="number"
-              min="0"
-              hide-details
-              density="compact"
-          />
-        </template>
+      <template v-slot:item.chance="{ item }">
+        <v-text-field
+            v-model="item.chance"
+            :label="t('chance')"
+            variant="outlined"
+            type="number"
+            min="0"
+            hide-details
+            density="compact"
+        />
+      </template>
 
-        <template #bottom></template>
-      </v-data-table>
+      <template #bottom></template>
+    </v-data-table>
 
-      <br>
+    <br>
 
-      <div class="d-flex justify-space-between align-center ga-2">
-        <v-spacer/>
+    <div class="d-flex justify-space-between align-center ga-2">
+      <v-spacer/>
 
-        <v-chip label :color="totalPercent !== 100 ? 'red' : 'green'">
+      <v-chip label :color="totalPercent !== 100 ? 'red' : 'green'">
         {{ t('total_percent') }}:
         {{ totalPercent }}
-        </v-chip>
+      </v-chip>
 
-        <v-btn
-            @click="update"
-            :disabled="totalPercent !== 100"
-            color="success"
-            type="submit"
-            variant="tonal"
-        >
-          {{ t('update') }}
-        </v-btn>
-      </div>
-    </v-card>
+      <v-btn
+          @click="update"
+          :disabled="totalPercent !== 100"
+          color="success"
+          type="submit"
+          variant="tonal"
+      >
+        {{ t('update') }}
+      </v-btn>
+    </div>
+  </v-card>
 </template>
 
 <style>
