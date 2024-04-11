@@ -17,17 +17,17 @@ const props = defineProps({
 
 const items = computed(() => [
   {
-    title: t('email_at'),
+    title: t('email'),
     subtitle: props.email_at,
     icon: 'mdi-email',
   },
   {
-    title: t('phone_at'),
+    title: t('phone'),
     subtitle: props.phone_at,
     icon: 'mdi-phone',
   },
   {
-    title: t('document_at'),
+    title: t('document'),
     subtitle: props.document_at,
     icon: 'mdi-passport-biometric',
   },

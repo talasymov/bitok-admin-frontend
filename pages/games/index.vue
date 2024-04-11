@@ -10,7 +10,6 @@ const itemsPerPage = ref(5);
 const headers = ref([
   {title: t('name'), align: 'start', sortable: false, key: 'name'},
   {title: t('image'), key: 'image', align: 'center'},
-  {title: t('actions'), key: 'actions', align: 'center', width: '100px'},
 ]);
 const filter_search = ref('');
 const search = ref('');
@@ -100,13 +99,14 @@ useBreadcrumbsStore().breadcrumbs = [
         item-value="name"
         @update:options="loadItems"
     >
-      <template v-slot:item.image="{ item }">
-<!--        <v-img :src="item.image"/>-->
-      </template>
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:item.name="{ item }">
+        {{ item.name }}
         <NuxtLink :to="localePath(`/games/${item.id}`)">
-          <v-btn icon="mdi-pencil" size="35"></v-btn>
+          <v-btn icon="mdi-pencil" variant="flat" size="x-small"></v-btn>
         </NuxtLink>
+      </template>
+      <template v-slot:item.image="{ item }">
+        <v-img :src="item.image" width="100" height="100" class="d-inline-block"/>
       </template>
     </v-data-table-server>
   </v-card>

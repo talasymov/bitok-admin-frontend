@@ -9,12 +9,11 @@ const {t} = useI18n()
 const localePath = useLocalePath()
 const itemsPerPage = ref(5);
 const headers = ref([
-  {title: 'Name', align: 'start', sortable: false, key: 'name'},
-  {title: 'FS', align: 'center', sortable: false, key: 'free_spins'},
-  {title: 'FS, bet', align: 'center', sortable: false, key: 'free_spins_bet'},
-  {title: 'Image', key: 'image', align: 'center'},
-  {title: 'Type', key: 'no_deposit', align: 'center'},
-  {title: 'Actions', key: 'actions', align: 'center'},
+  {title: t('name'), align: 'start', sortable: false, key: 'name'},
+  {title: t('fs'), align: 'center', sortable: false, key: 'free_spins'},
+  {title: t('fs_bet'), align: 'center', sortable: false, key: 'free_spins_bet'},
+  {title: t('image'), key: 'image', align: 'center'},
+  {title: t('type'), key: 'no_deposit', align: 'center'},
 ]);
 const search = ref('');
 const serverItems = ref([]);
@@ -70,10 +69,16 @@ useBreadcrumbsStore().breadcrumbs = [
         item-value="name"
         @update:options="loadItems"
     >
+      <template v-slot:item.name="{ item }">
+        {{ item.name }}
+        <NuxtLink :to="localePath(`/bonuses/${item.id}`)">
+          <v-btn icon="mdi-pencil" variant="flat" size="x-small"></v-btn>
+        </NuxtLink>
+      </template>
       <template v-slot:item.no_deposit="{ item }">
         <v-chip
-            :color="item.no_deposit === 0 ? 'green' : 'orange'"
-            :text="item.no_deposit === 0 ? 'Deposit' : 'No Deposit'"
+            :color="item.no_deposit === false ? 'green' : 'orange'"
+            :text="item.no_deposit === false ? 'Deposit' : 'No Deposit'"
             class="text-uppercase"
             size="small"
             label
@@ -81,11 +86,6 @@ useBreadcrumbsStore().breadcrumbs = [
       </template>
       <template v-slot:item.image="{ item }">
         <v-img :src="item.image" max-width="100" max-height="100"/>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <NuxtLink :to="localePath(`/bonuses/${item.id}`)">
-          <v-btn icon="mdi-pencil" size="35"></v-btn>
-        </NuxtLink>
       </template>
     </v-data-table-server>
   </v-card>

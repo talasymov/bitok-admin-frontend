@@ -11,7 +11,6 @@ const itemsPerPage = ref(100);
 const headers = ref([
   {title: t('name'), align: 'start', key: 'name', sortable: false},
   {title: t('status'), align: 'start', key: 'status', sortable: false},
-  {title: t('actions'), align: 'center', key: 'actions', width: '100px'},
 ]);
 const search = ref('');
 const serverItems = ref([]);
@@ -67,6 +66,12 @@ useBreadcrumbsStore().breadcrumbs = [
         item-value="name"
         @update:options="loadItems"
     >
+      <template v-slot:item.name="{ item }">
+        {{ item.name }}
+        <NuxtLink :to="localePath(`/sliders/${item.id}`)">
+          <v-btn icon="mdi-pencil" variant="flat" size="x-small"></v-btn>
+        </NuxtLink>
+      </template>
       <!--      <template v-slot:item.image="{ item }">-->
       <!--        <v-img :src="item.image"/>-->
       <!--      </template>-->

@@ -6,7 +6,6 @@ definePageMeta({
 
 const {t} = useI18n()
 const localePath = useLocalePath()
-const itemsPerPage = ref(5);
 const headers = ref([
   {title: t('username'), align: 'start', sortable: false, key: 'name'},
   {title: t('email'), align: 'start', sortable: false, key: 'email'},
@@ -15,8 +14,8 @@ const headers = ref([
   {title: t('bonuses'), align: 'center', sortable: false, key: 'bonus_balance'},
   {title: t('wager_left'), align: 'center', sortable: false, key: 'wager_left'},
   {title: t('wager_target'), align: 'center', sortable: false, key: 'wager_target'},
-  {title: t('actions'), key: 'actions', align: 'center', width: '100px'},
 ]);
+const itemsPerPage = ref(5);
 const filter_search = ref('');
 const search = ref('');
 const serverItems = ref([]);
@@ -103,24 +102,11 @@ useBreadcrumbsStore().breadcrumbs = [
         item-value="name"
         @update:options="loadItems"
     >
-      <template v-slot:item.actions="{ item }">
-        <v-menu>
-          <template v-slot:activator="{ props }">
-            <v-btn
-                v-bind="props"
-                size="35"
-                icon="mdi-dots-vertical"
-            />
-          </template>
-          <v-list>
-            <v-list-item :to="localePath(`/users/${item.id}`)">
-              <v-list-item-title>{{ t('info') }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-<!--        <NuxtLink :to="localePath(`/users/${item.id}`)">-->
-<!--          <v-btn icon="mdi-pencil" size="35"></v-btn>-->
-<!--        </NuxtLink>-->
+      <template v-slot:item.name="{ item }">
+        {{ item.name }}
+        <NuxtLink :to="localePath(`/users/${item.id}`)">
+          <v-btn icon="mdi-pencil" variant="flat" size="x-small"></v-btn>
+        </NuxtLink>
       </template>
       <template v-slot:item.wager_left="{ item }">
         {{ item.active_bonus?.wager_left || 0 }}

@@ -75,6 +75,15 @@ onMounted(async () => {
     }
   })
 })
+
+const addBonus = () => {
+  if (!state.value.bonuses) state.value.bonuses = []
+
+  state.value.bonuses.push({
+    id: null,
+    bonus_chance: 0,
+  })
+}
 </script>
 
 <template>
@@ -84,6 +93,14 @@ onMounted(async () => {
         label="name"
         clearable
     />
+
+    <v-toolbar flat>
+      <v-toolbar-title>
+        {{ t('bonuses') }}
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn @click="addBonus" icon="mdi-plus"/>
+    </v-toolbar>
 
     <v-data-table
         v-if="state?.bonuses?.length > 0"
@@ -101,10 +118,8 @@ onMounted(async () => {
             item-title="name"
             variant="outlined"
             clearable
-            return-object
             hide-details
             density="compact"
-            :disabled="true"
         ></v-autocomplete>
       </template>
 

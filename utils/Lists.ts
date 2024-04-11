@@ -6,6 +6,7 @@ export const SIDEBAR_LINKS_ITEMS = [
     {text: 'games', value: '/games', icon: 'mdi-slot-machine'},
     {text: 'users', value: '/users', icon: 'mdi-account-group'},
     {text: 'sliders', value: '/sliders', icon: 'mdi-play-box-outline'},
+    {text: 'transactions', value: '/transactions', icon: 'mdi-invoice-list'},
 ]
 
 export const SUPPORTED_LANGUAGES_ITEMS = [

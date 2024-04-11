@@ -9,10 +9,9 @@ const {t} = useI18n()
 const localePath = useLocalePath()
 const itemsPerPage = ref(5);
 const headers = ref([
-  {title: 'Name', align: 'start', sortable: false, key: 'name'},
-  {title: 'Category', key: 'category', align: 'end'},
-  {title: 'Status', key: 'status', align: 'end'},
-  {title: 'Actions', key: 'actions', align: 'end'},
+  {title: t('name'), align: 'start', sortable: false, key: 'name'},
+  {title: t('category'), key: 'category', align: 'end'},
+  {title: t('status'), key: 'status', align: 'end'},
 ]);
 const search = ref('');
 const serverItems = ref([]);
@@ -66,6 +65,12 @@ useBreadcrumbsStore().breadcrumbs = [
         item-value="name"
         @update:options="loadItems"
     >
+      <template v-slot:item.name="{ item }">
+        {{ item.name }}
+        <NuxtLink :to="localePath(`/faqs/${item.id}`)">
+          <v-btn icon="mdi-pencil" variant="flat" size="x-small"></v-btn>
+        </NuxtLink>
+      </template>
       <template v-slot:item.status="{ item }">
         <div class="text-end">
           <v-chip
@@ -76,11 +81,6 @@ useBreadcrumbsStore().breadcrumbs = [
               label
           ></v-chip>
         </div>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <NuxtLink :to="localePath(`/faqs/${item.id}`)">
-          <v-btn icon="mdi-pencil" size="35"></v-btn>
-        </NuxtLink>
       </template>
     </v-data-table-server>
   </v-card>

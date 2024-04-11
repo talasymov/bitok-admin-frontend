@@ -1,3 +1,12 @@
+export const MAIN_TRANSACTIONS_HEADERS = [
+    {title: 'id', value: 'id'},
+    {title: 'amount', value: 'amount'},
+    {title: 'user', value: 'user'},
+    {title: 'type', value: 'type'},
+    {title: 'status', value: 'status'},
+    {title: 'created_at', value: 'created_at'},
+]
+
 export const TRANSACTIONS_HEADERS = [
     {title: 'id', value: 'id'},
     {title: 'amount', value: 'amount'},
@@ -8,7 +17,7 @@ export const TRANSACTIONS_HEADERS = [
 
 export const NOTIFICATIONS_HEADERS = [
     {title: 'type', value: 'type'},
-    {title: 'data', value: 'data'},
+    {title: 'message', value: 'data'},
     {title: 'read_at', value: 'read_at'},
     {title: 'created_at', value: 'created_at'},
 ]
@@ -21,8 +30,8 @@ export const USER_BONUSES_HEADERS = [
 ]
 
 export const USER_GIFT_BOXES_HEADERS = [
-    {title: 'status', value: 'status'},
     {title: 'gift_box_name', value: 'gift_box_name'},
+    {title: 'status', value: 'status'},
     {title: 'deadline', value: 'deadline'},
     {title: 'created_at', value: 'created_at'},
 ]
