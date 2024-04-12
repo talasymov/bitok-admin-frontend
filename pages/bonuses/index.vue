@@ -1,50 +1,13 @@
 <script setup lang="ts">
+import {useBonusesStore} from "~/stores/bonuses/bonuses";
+
 definePageMeta({
   middleware: ['auth'],
 });
 
-import {ref} from 'vue';
-
-const {t} = useI18n()
 const localePath = useLocalePath()
-const itemsPerPage = ref(5);
-const headers = ref([
-  {title: t('name'), align: 'start', sortable: false, key: 'name'},
-  {title: t('fs'), align: 'center', sortable: false, key: 'free_spins'},
-  {title: t('fs_bet'), align: 'center', sortable: false, key: 'free_spins_bet'},
-  {title: t('image'), key: 'image', align: 'center'},
-  {title: t('type'), key: 'no_deposit', align: 'center'},
-  {title: t('created_at'), key: 'created_at', align: 'center'},
-  {title: t('updated_at'), key: 'updated_at', align: 'center'},
-]);
-const search = ref('');
-const serverItems = ref([]);
-const loading = ref(true);
-const totalItems = ref(0);
-
-const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: number; sortBy: any[] }) => {
-  loading.value = true;
-
-  $fetch('admin/bonuses')
-      .then((data) => {
-        serverItems.value = data
-        loading.value = false
-      })
-};
-
-useBreadcrumbsStore().breadcrumbs = [
-  {
-    title: t('dashboard'),
-    disabled: false,
-    href: localePath('/'),
-  },
-  {
-    title: t('bonuses'),
-    disabled: true,
-  },
-]
+const bonusesStore = useBonusesStore()
 </script>
-
 
 <template>
   <v-card
@@ -52,24 +15,20 @@ useBreadcrumbsStore().breadcrumbs = [
   >
     <v-toolbar flat>
       <v-toolbar-title>
-        {{ t('bonuses') }}
+        {{ $t('bonuses') }}
       </v-toolbar-title>
-
       <v-spacer></v-spacer>
-
       <v-btn :to="localePath('/bonuses/create')" icon="mdi-plus"/>
-
-      <v-btn icon="mdi-dots-vertical"/>
     </v-toolbar>
     <v-data-table-server
-        v-model:items-per-page="itemsPerPage"
-        :headers="headers"
-        :items="serverItems"
-        :items-length="totalItems"
-        :loading="loading"
-        :search="search"
+        v-model:items-per-page="bonusesStore.items_per_page"
+        :headers="bonusesStore.headers"
+        :items="bonusesStore.items"
+        :items-length="bonusesStore.total_items"
+        :loading="bonusesStore.loading"
+        :search="bonusesStore.search"
         item-value="name"
-        @update:options="loadItems"
+        @update:options="bonusesStore.fetchBonuses"
     >
       <template v-slot:item.name="{ item }">
         {{ item.name }}

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {usePageStore} from "~/stores/page";
+
 definePageMeta({
   middleware: ['auth'],
 });
@@ -46,42 +48,12 @@ const update = async () => {
   })
 }
 
-// const {refresh: deleteBonus, status: deleteStatus} = useFetch<any>(`admin/bonuses/${route.params.id}`, {
-//   method: "DELETE",
-//   immediate: false,
-//   watch: false,
-//   async onResponse({response}) {
-//     errors.value = null
-//     if (response?.status === 422) {
-//       errors.value = response._data?.errors;
-//     } else if (response.status === 200) {
-//       navigateTo(localePath('/bonuses'))
-//     }
-//   }
-// });
-
 onMounted(async () => {
   await $fetch(`admin/bonuses/${route.params.id}`, {
     onResponse({response}) {
       if (response?.status === 200) {
         state.value = response._data
-
-        useBreadcrumbsStore().breadcrumbs = [
-          {
-            title: t('dashboard'),
-            disabled: false,
-            href: localePath('/'),
-          },
-          {
-            title: t('bonuses'),
-            disabled: false,
-            href: localePath('/bonuses'),
-          },
-          {
-            title: state.value.name[locale.value],
-            disabled: true,
-          },
-        ]
+        usePageStore().page.title = state.value.name[locale.value]
       }
     }
   })

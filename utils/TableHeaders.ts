@@ -7,6 +7,16 @@ export const MAIN_TRANSACTIONS_HEADERS = [
     {title: 'created_at', value: 'created_at'},
 ]
 
+export const MAIN_BONUSES_HEADERS = [
+    {title: 'name', align: 'start', sortable: false, key: 'name'},
+    {title: 'fs', align: 'center', sortable: false, key: 'free_spins'},
+    {title: 'fs_bet', align: 'center', sortable: false, key: 'free_spins_bet'},
+    {title: 'image', key: 'image', align: 'center'},
+    {title: 'type', key: 'no_deposit', align: 'center'},
+    {title: 'created_at', key: 'created_at', align: 'center'},
+    {title: 'updated_at', key: 'updated_at', align: 'center'},
+]
+
 export const TRANSACTIONS_HEADERS = [
     {title: 'id', value: 'id'},
     {title: 'amount', value: 'amount'},
