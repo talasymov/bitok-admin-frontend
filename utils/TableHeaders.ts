@@ -17,6 +17,12 @@ export const MAIN_BONUSES_HEADERS = [
     {title: 'updated_at', key: 'updated_at', align: 'center'},
 ]
 
+export const MAIN_FAQS_HEADERS = [
+    {title: 'name', key: 'name', align: 'start', sortable: false},
+    {title: 'category', key: 'category', align: 'end'},
+    {title: 'status', key: 'status', align: 'end'},
+]
+
 export const TRANSACTIONS_HEADERS = [
     {title: 'id', value: 'id'},
     {title: 'amount', value: 'amount'},

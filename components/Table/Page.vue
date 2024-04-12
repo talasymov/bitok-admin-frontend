@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import {useBonusesStore} from "~/stores/bonuses/bonuses";
-
-definePageMeta({
-  middleware: ['auth'],
-});
+defineProps({
+  store: {
+    type: Object,
+    required: true,
+  },
+})
 
 const localePath = useLocalePath()
-const store = useBonusesStore()
+const route = useRoute()
 </script>
 
 <template>
@@ -15,10 +16,10 @@ const store = useBonusesStore()
   >
     <v-toolbar flat>
       <v-toolbar-title>
-        {{ $t('bonuses') }}
+        {{ $t(route.fullPath.substring(1, route.fullPath.length)) }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn :to="localePath('/bonuses/create')" icon="mdi-plus"/>
+      <v-btn :to="localePath(`${route.fullPath}/create`)" icon="mdi-plus"/>
     </v-toolbar>
     <v-data-table-server
         v-model:items-per-page="store.items_per_page"
@@ -32,21 +33,12 @@ const store = useBonusesStore()
     >
       <template v-slot:item.name="{ item }">
         {{ item.name }}
-        <NuxtLink :to="localePath(`/bonuses/${item.id}`)">
+        <NuxtLink :to="localePath(`/faqs/${item.id}`)">
           <v-btn icon="mdi-pencil" variant="flat" size="x-small"></v-btn>
         </NuxtLink>
       </template>
-      <template v-slot:item.no_deposit="{ item }">
-        <v-chip
-            :color="item.no_deposit === false ? 'green' : 'orange'"
-            :text="item.no_deposit === false ? 'Deposit' : 'No Deposit'"
-            class="text-uppercase"
-            size="small"
-            label
-        ></v-chip>
-      </template>
-      <template v-slot:item.image="{ item }">
-        <v-img :src="item.image" max-width="100" max-height="100"/>
+      <template v-for="(slot, name) in $slots" v-slot:[name]="slotProps">
+        <slot :name="name" v-bind="slotProps"></slot>
       </template>
     </v-data-table-server>
   </v-card>

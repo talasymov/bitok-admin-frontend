@@ -1,87 +1,26 @@
 <script setup lang="ts">
+import {useFaqsStore} from "~/stores/faqs/faqs";
+
 definePageMeta({
   middleware: ['auth'],
 });
 
-import {ref} from 'vue';
-
-const {t} = useI18n()
 const localePath = useLocalePath()
-const itemsPerPage = ref(5);
-const headers = ref([
-  {title: t('name'), align: 'start', sortable: false, key: 'name'},
-  {title: t('category'), key: 'category', align: 'end'},
-  {title: t('status'), key: 'status', align: 'end'},
-]);
-const search = ref('');
-const serverItems = ref([]);
-const loading = ref(true);
-const totalItems = ref(0);
-
-const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: number; sortBy: any[] }) => {
-  loading.value = true;
-
-  $fetch('admin/faqs')
-      .then((data) => {
-        serverItems.value = data
-        loading.value = false
-      })
-};
-
-useBreadcrumbsStore().breadcrumbs = [
-  {
-    title: t('dashboard'),
-    disabled: false,
-    href: localePath('/'),
-  },
-  {
-    title: t('faqs'),
-    disabled: true,
-  },
-]
+const store = useFaqsStore()
 </script>
 
-
 <template>
-  <v-card
-      class="mx-auto"
-  >
-    <v-toolbar flat>
-      <v-toolbar-title>
-        {{ t('faqs') }}
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn :to="localePath('/faqs/create')" icon="mdi-plus"/>
-<!--      <v-btn icon="mdi-dots-vertical"/>-->
-    </v-toolbar>
-
-    <v-data-table-server
-        v-model:items-per-page="itemsPerPage"
-        :headers="headers"
-        :items="serverItems"
-        :items-length="totalItems"
-        :loading="loading"
-        :search="search"
-        item-value="name"
-        @update:options="loadItems"
-    >
-      <template v-slot:item.name="{ item }">
-        {{ item.name }}
-        <NuxtLink :to="localePath(`/faqs/${item.id}`)">
-          <v-btn icon="mdi-pencil" variant="flat" size="x-small"></v-btn>
-        </NuxtLink>
-      </template>
-      <template v-slot:item.status="{ item }">
-        <div class="text-end">
-          <v-chip
-              :color="item.status === 'published' ? 'green' : 'orange'"
-              :text="item.status"
-              class="text-uppercase"
-              size="small"
-              label
-          ></v-chip>
-        </div>
-      </template>
-    </v-data-table-server>
-  </v-card>
+  <TablePage :store="store">
+    <template v-slot:item.status="{ item }">
+      <div class="text-end">
+        <v-chip
+            :color="item.status === 'published' ? 'green' : 'orange'"
+            :text="item.status"
+            class="text-uppercase"
+            size="small"
+            label
+        ></v-chip>
+      </div>
+    </template>
+  </TablePage>
 </template>

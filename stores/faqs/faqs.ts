@@ -1,8 +1,8 @@
-import {MAIN_BONUSES_HEADERS} from "~/utils/TableHeaders";
+import {MAIN_FAQS_HEADERS} from "~/utils/TableHeaders";
 
-export const useBonusesStore = defineStore('bonuses', () => {
+export const useFaqsStore = defineStore('faqs', () => {
     const items = ref([])
-    const headers = useTableHeaders(MAIN_BONUSES_HEADERS)
+    const headers = useTableHeaders(MAIN_FAQS_HEADERS)
     const items_per_page = ref(5);
     const search = ref('');
     const loading = ref(false);
@@ -10,8 +10,8 @@ export const useBonusesStore = defineStore('bonuses', () => {
 
     async function fetchTable({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: number; sortBy: any[] }) {
         loading.value = true
-        await $fetch('admin/bonuses', {
-            onResponse({response}) {
+        await $fetch('admin/faqs', {
+            async onResponse({response}) {
                 items.value = response._data
                 loading.value = false
             },
