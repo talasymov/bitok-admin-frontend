@@ -42,8 +42,6 @@ const apply = () => {
           variant="outlined"
           append-inner-icon="mdi-calendar"
           :model-value="formatDate"
-          density="compact"
-          hide-details
           style="min-width: 215px"
       />
     </template>

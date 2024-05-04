@@ -1,4 +1,6 @@
 export default {
+    position_from: 'Позиція від',
+    position_to: 'Позиція до',
     promotions: 'Промо-акції',
     pages: 'Сторінки',
     name: 'Назва',
@@ -46,8 +48,11 @@ export default {
     percent: 'Відсоток',
     money: 'Гроші',
     deposit_conditions: 'Умови депозиту',
+    min_bet: 'Мінімальна ставка',
     max_bet: 'Максимальна ставка',
     min_deposit: 'Мінімальний депозит',
+    start_at: 'Початок',
+    finish_at: 'Закінчення',
     common_settings: 'Загальні налаштування',
     bonus_filling: 'Заповнення бонусу',
     ua_lang: 'Українська',
