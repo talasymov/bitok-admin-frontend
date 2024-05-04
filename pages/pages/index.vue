@@ -56,7 +56,7 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
     >
       <template v-slot:item.name="{ item }">
         {{ item.name }}
-        <NuxtLink :to="localePath(`/pages/${item.id}`)">
+        <NuxtLink :to="localePath(`/pages/${item.slug}`)">
           <v-btn icon="mdi-pencil" variant="flat" size="x-small"></v-btn>
         </NuxtLink>
       </template>
