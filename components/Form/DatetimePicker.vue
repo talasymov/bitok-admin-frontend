@@ -1,21 +1,23 @@
 <script setup lang="ts">
-const model = defineModel({default: null, type: Boolean});
-const emit = defineEmits(['date-update']);
-const {date} = defineProps({
-  date: {
-    type: String,
-    default: null,
-  },
+import moment from 'moment';
+
+const model = defineModel({default: null, type: String});
+const emit = defineEmits(['update:modelValue']);
+defineProps({
   label: {
     type: String,
     default: 'Date',
   },
 })
 
-const hours_items = Array.from({length: 24}, (_, i) => {return {value: i, title: i.toString().padStart(2, '0')}});
-const minutes_items = Array.from({length: 60}, (_, i) => {return {value: i, title: i.toString().padStart(2, '0')}});
+const hours_items = Array.from({length: 24}, (_, i) => {
+  return {value: i, title: i.toString().padStart(2, '0')}
+});
+const minutes_items = Array.from({length: 60}, (_, i) => {
+  return {value: i, title: i.toString().padStart(2, '0')}
+});
 
-const _date = new Date(date)
+const _date = new Date(model.value)
 
 const hours = ref(_date.getHours());
 const minutes = ref(_date.getMinutes());
@@ -23,8 +25,12 @@ const seconds = ref(_date.getSeconds());
 
 const selectedDate = ref(_date);
 const formatDate = computed(() => {
-  return selectedDate.value ? selectedDate.value.toISOString().split('T')[0] + ' ' + hours.value.toString().padStart(2, '0') + ':' + minutes.value.toString().padStart(2, '0') + ':' + seconds.value.toString().padStart(2, '0') : '';
+  return selectedDate.value ? moment(selectedDate.value).format('YYYY-MM-DD') + ' ' + hours.value.toString().padStart(2, '0') + ':' + minutes.value.toString().padStart(2, '0') + ':' + seconds.value.toString().padStart(2, '0') : '';
 })
+
+const apply = () => {
+  emit('update:modelValue', (new Date(formatDate.value)).toISOString());
+}
 </script>
 
 <template>
@@ -80,7 +86,7 @@ const formatDate = computed(() => {
           ></v-btn>
           <v-btn
               :text="'apply'"
-              @click="emit('date-update', formatDate); isActive.value = false"
+              @click="apply(); isActive.value = false"
           ></v-btn>
         </v-card-actions>
       </v-card>

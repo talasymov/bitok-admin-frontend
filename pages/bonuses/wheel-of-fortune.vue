@@ -62,18 +62,6 @@ onMounted(async () => {
     }
   })
 })
-
-useBreadcrumbsStore().breadcrumbs = [
-  {
-    title: t('dashboard'),
-    disabled: false,
-    href: localePath('/'),
-  },
-  {
-    title: t('wheel_of_fortune'),
-    disabled: true,
-  },
-]
 </script>
 
 <template>

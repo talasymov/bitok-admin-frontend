@@ -47,23 +47,6 @@ onMounted(async () => {
     onResponse({response}) {
       if (response?.status === 200) {
         state.value = response._data
-
-        useBreadcrumbsStore().breadcrumbs = [
-          {
-            title: t('dashboard'),
-            disabled: false,
-            href: localePath('/'),
-          },
-          {
-            title: t('games'),
-            disabled: false,
-            href: localePath('/games'),
-          },
-          {
-            title: state.value.name,
-            disabled: true,
-          },
-        ]
       }
     }
   })

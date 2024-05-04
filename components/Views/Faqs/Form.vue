@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps({
   store: useFaqEditStore,
-  selectStore: useSelectStore
+  selectStore: useSelectStore,
 })
 
 import {required} from "~/utils/Rules";

@@ -25,18 +25,6 @@ const loadItems = ({page, itemsPerPage, sortBy}: { page: number; itemsPerPage: n
         loading.value = false
       })
 };
-
-useBreadcrumbsStore().breadcrumbs = [
-  {
-    title: t('dashboard'),
-    disabled: false,
-    href: localePath('/'),
-  },
-  {
-    title: t('gift_boxes'),
-    disabled: true,
-  }
-]
 </script>
 
 

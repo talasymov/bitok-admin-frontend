@@ -53,18 +53,6 @@ const setDateTo = (date: string) => {
 const search = () => {
   loadItems({page: 1, itemsPerPage: itemsPerPage.value, sortBy: []})
 }
-
-useBreadcrumbsStore().breadcrumbs = [
-  {
-    title: t('dashboard'),
-    disabled: false,
-    href: localePath('/'),
-  },
-  {
-    title: t('transactions'),
-    disabled: true,
-  },
-]
 </script>
 
 <template>

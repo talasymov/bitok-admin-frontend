@@ -23,7 +23,7 @@ useHead({
     </v-navigation-drawer>
     <v-main>
       <v-container fluid>
-        <CommonBreadcrumbs/>
+<!--        <CommonBreadcrumbs/>-->
         <NuxtPage/>
       </v-container>
     </v-main>

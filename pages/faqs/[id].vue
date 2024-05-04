@@ -6,14 +6,14 @@ definePageMeta({
 import {useFaqEditStore} from "~/stores/faqs/edit";
 import {useSelectStore} from "~/stores/select";
 
-const faqStore = useFaqEditStore()
-const selectStore = useSelectStore()
-const id = useRoute().params.id
+const faqStore = useFaqEditStore();
+const selectStore = useSelectStore();
+const id = useRoute().params.id;
 
 onMounted(async () => {
-  await faqStore.fetchModel(id)
-  await selectStore.fetchFaqCategories()
-  await selectStore.fetchFaqStatuses()
+  await faqStore.fetchModel(id);
+  await selectStore.fetchFaqCategories();
+  await selectStore.fetchFaqStatuses();
 })
 </script>
 

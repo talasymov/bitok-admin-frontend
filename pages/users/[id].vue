@@ -39,23 +39,6 @@ const {refresh: fetchUser, status: fetchUserStatus} = useFetch<any>(`admin/users
   async onResponse({response}) {
     if (response?.status === 200) {
       user.value = response._data.data
-
-      useBreadcrumbsStore().breadcrumbs = [
-        {
-          title: t('dashboard'),
-          disabled: false,
-          href: localePath('/'),
-        },
-        {
-          title: t('users'),
-          disabled: false,
-          href: localePath('/users'),
-        },
-        {
-          title: user.value.name,
-          disabled: true,
-        },
-      ]
     }
   }
 });

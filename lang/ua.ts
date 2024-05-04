@@ -1,5 +1,8 @@
 export default {
+    promotions: 'Промо-акції',
+    pages: 'Сторінки',
     name: 'Назва',
+    description: 'Опис',
     email: 'Пошта',
     password: 'Пароль',
     category: 'Категорія',

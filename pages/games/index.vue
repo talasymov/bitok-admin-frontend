@@ -43,18 +43,6 @@ const applySearch = () => {
     filter_search.value = search.value
   }, 1000)
 }
-
-useBreadcrumbsStore().breadcrumbs = [
-  {
-    title: t('dashboard'),
-    disabled: false,
-    href: localePath('/'),
-  },
-  {
-    title: t('games'),
-    disabled: true,
-  }
-]
 </script>
 
 
