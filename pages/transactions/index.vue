@@ -67,8 +67,8 @@ const search = () => {
       <v-spacer></v-spacer>
 
       <div class="d-flex ga-2 pr-2">
-        <FormDatetimePicker v-model="date_from_dialog" @date-update="setDateFrom" :date="date_from" :label="t('from')"/>
-        <FormDatetimePicker v-model="date_to_dialog" @date-update="setDateTo" :date="date_to" :label="t('to')"/>
+        <FormDatetimePicker v-model="date_from" :label="t('from')"/>
+        <FormDatetimePicker v-model="date_to" :label="t('to')"/>
         <v-btn variant="plain" @click="search">
           {{ t('search') }}
         </v-btn>

@@ -17,8 +17,10 @@ const image = ref(null)
 
 const update = async () => {
   const formData = new FormData();
-  formData.append("image", image.value);
   formData.append("data", JSON.stringify(state.value));
+  if (image.value !== null){
+    formData.append("image_file", image.value);
+  }
 
   await $fetch(`admin/sliders/${route.params.id}`, {
     method: "PUT",
@@ -58,7 +60,7 @@ const image_rules = [
 </script>
 
 <template>
-  <v-card class="mx-auto px-6 py-8" width="500">
+  <v-card class="mx-auto px-6 py-8" width="1024">
     <multi-lang-text-field
         v-model="state.name"
         :rules="[required]"
@@ -88,6 +90,10 @@ const image_rules = [
         />
       </NuxtLink>
     </div>
+
+    <FormMultiLangTextEdtitor
+        v-model="state.content"
+    />
 
     <br>
 
